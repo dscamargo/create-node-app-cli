@@ -2,7 +2,7 @@
   "name": "create-node-app",
   "version": "1.0.0",
   "description": "create-node-app CLI",
-  "private": true,
+  "private": false,
   "types": "build/types/types.d.ts",
   "bin": {
     "create-node-app": "bin/create-node-app"

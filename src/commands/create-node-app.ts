@@ -18,17 +18,17 @@ const command: GluegunCommand = {
     const projectTemplate = parameters.options.template || BASE_REPO_SSH_URL || ''
     const pathName = parameters.first || PATH_NAME
 
-    if (!!validations.dependenciesValidate({ haveGitInstalled, haveNodeInstalled })){
+    if (validations.dependenciesValidate({ haveGitInstalled, haveNodeInstalled })){
       print.error(validations.dependenciesValidate({ haveGitInstalled, haveNodeInstalled }));
       return;
     }
     
-    if (!!validations.inputValidate({ projectTemplate, pathName })){
+    if (validations.inputValidate({ projectTemplate, pathName })){
       print.error(validations.inputValidate({pathName, projectTemplate}));
       return;
     }
 
-    const existsPathname = await filesystem.exists(`${filesystem.cwd()}/${pathName}`)
+    const existsPathname = filesystem.exists(`${filesystem.cwd()}/${pathName}`)
 
     if (existsPathname){
       print.error(`Já existe uma pasta nesse diretório com o nome '${pathName}', remova e tente novamente`);

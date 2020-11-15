@@ -29,10 +29,13 @@ jobs:
       - run: npm test
 
       - run: npm run build
-      
+
       - uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.NPM_TOKEN }}
+      - if: steps.publish.outputs.type != 'none'
+        run: |
+          echo ::set-env name=NEW_VERSION::${{ steps.publish.outputs.version }}
 
       - name: Slack notification
-        run: curl -X POST --data-urlencode "payload={\"channel\":\"$SLACK_CHANNEL\", \"username\":\"$SLACK_BOT_NAME\",\"text\":\"$SLACK_PROJECT_MESSAGE($SLACK_PROJECT_DNS).\",\"icon_url\":\"$SLACK_BOT_AVATAR_URL\"}" "$SLACK_HOOK"
+        run: curl -X POST --data-urlencode "payload={\"channel\":\"$SLACK_CHANNEL\", \"username\":\"$SLACK_BOT_NAME\",\"text\":\"$SLACK_PROJECT_MESSAGE $NEW_VERSION ($SLACK_PROJECT_DNS).\",\"icon_url\":\"$SLACK_BOT_AVATAR_URL\"}" "$SLACK_HOOK"

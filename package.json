@@ -1,7 +1,7 @@
 {
   "name": "dscamargo-create-node-app",
   "version": "1.0.1",
-  "description": "create-node-app CLI",
+  "description": "CLI for create node app",
   "private": false,
   "types": "build/types/types.d.ts",
   "bin": {

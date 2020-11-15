@@ -9,10 +9,10 @@ const cli = async cmd =>
 
 test('outputs version', async () => {
   const output = await cli('--version')
-  expect(output).toContain('1.0.4')
+  expect(output).toContain('1.0.5')
 })
 
 test('outputs help', async () => {
   const output = await cli('--help')
-  expect(output).toContain('1.0.4')
+  expect(output).toContain('1.0.5')
 })

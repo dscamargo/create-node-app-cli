@@ -6,6 +6,14 @@ on:
   pull_request:
     branches: [ master ]
 
+env:
+  SLACK_BOT_AVATAR_URL: https://previews.dropbox.com/p/thumb/AAsY2O-EMphI1p4Qlg-I4aWgcL19jlRX90kzqmaeQ2UPdvFG95diGqnQKhluJZJwVkHgTbj_C9LT67TQgCpJCu2PGgzuaNvLcUrjcxjqmcMDwJQKDAIIWIoaFsIIRQNzUTkbgcd_ETy0RB_7oRCkLAi3QfPnXlGWJT-oZSFDHdiXM0OTXUA9QDrkynf8XXFwt5cyALiHzJulzgm0DzpjJ-K0sNNaLE-hQ_NQtatjJIzgNGAQwbGT78OtD4hTkKYrvn_qiIkfwLGnMV_TomRK5ZEZY8HSrErZLRSdXVcDIkPpp967LR-q7hl4pSceGJVBfsfXuzN359ZsA6YDUQ7LhwgP/p.png?fv_content=true&size_mode=5
+  SLACK_PROJECT_MESSAGE: Create Node App - CLI - Atualizado com sucesso
+  SLACK_CHANNEL: '#deploy-notifications'
+  SLACK_BOT_NAME: DeployBot
+  SLACK_PROJECT_DNS: https://www.npmjs.com/package/dscamargo-create-node-app
+  SLACK_HOOK: ${{secrets.SLACK_HOOK}}
+
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -23,3 +31,6 @@ jobs:
       - uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.NPM_TOKEN }}
+
+      - name: Slack notification
+        run: curl -X POST --data-urlencode "payload={\"channel\":\"$SLACK_CHANNEL\", \"username\":\"$SLACK_BOT_NAME\",\"text\":\"$SLACK_PROJECT_MESSAGE($SLACK_PROJECT_DNS).\",\"icon_url\":\"$SLACK_BOT_AVATAR_URL\"}" "$SLACK_HOOK"
